@@ -14,3 +14,7 @@ Plans:
 Recommendation: use the database querying power
 
 Talked about CSV, databases
+
+Suggestion: division of labor
+
+For tomorrow: A plan for the project -> goals, speculation about challenges
