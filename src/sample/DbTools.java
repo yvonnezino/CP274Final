@@ -10,7 +10,7 @@ public class DbTools {
     public static Connection getConnection() throws Exception {
         Connection conn = null;
         // db parameters
-        String url = "jdbc:sqlite:data.db";
+        String url = "jdbc:sqlite:LatestDataSet.db";
         // create a connection to the database
         conn = DriverManager.getConnection(url);
 
