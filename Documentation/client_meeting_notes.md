@@ -18,3 +18,10 @@ Talked about CSV, databases
 Suggestion: division of labor
 
 For tomorrow: A plan for the project -> goals, speculation about challenges
+
+2020-5-8
+
+Meaning of "package" in Java
+
+data files in repositories
+
