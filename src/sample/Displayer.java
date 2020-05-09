@@ -13,7 +13,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 
 
 public class Displayer implements Initializable {
@@ -43,18 +45,33 @@ public class Displayer implements Initializable {
 //            recoveredNumber.setText();
 //            infectedNumber.setText();
 
+
+            //create line graph
             XYChart.Series confirmedSeries=new XYChart.Series();
             XYChart.Series deathSeries=new XYChart.Series();
+            confirmedSeries.setName("Confirmed Cases");
+            deathSeries.setName("Deaths");
             //need the fips number from search;initialize
-            double fips=0;
+            double fips=6037.0;
 
-           // HashMap<String,Integer> confirmedDates=getByFips("ConfirmedUS",fips);
-            //HashMap<String,Integer> deathDates=getByFips("DeathsUS",fips);
-            //while(confirmedDates.hasNext()){
-                
-            //}
-            deathSeries.getData().add(new XYChart.Data("1",23));
-            deathSeries.getData().add(new XYChart.Data("1",28));
+            try {
+                Map<String,Integer> confirmedDates=tool.getByFips("ConfirmedUS",fips);
+                for(Map.Entry<String,Integer> entry:confirmedDates.entrySet()){
+                    System.out.println("Key: "+entry.getKey()+"Value: "+entry.getValue());
+                    confirmedSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                Map<String,Integer> deathDates=tool.getByFips("DeathsUS",fips);
+                for(Map.Entry<String,Integer> entry:deathDates.entrySet()){
+                    deathSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             lineChart.getData().addAll(confirmedSeries,deathSeries);
 
         }

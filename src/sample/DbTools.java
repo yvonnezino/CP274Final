@@ -1,3 +1,4 @@
+//package CP274Final.src.sample;
 package sample;
 
 import java.sql.Connection;
@@ -6,13 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 //Tools for getting data from the database (only works for US data right now (if it works at all))
 public class DbTools {
     public static Connection getConnection() throws Exception {
         Connection conn = null;
         // db parameters
-        String url = "jdbc:sqlite:TimeDependent.db";
+        String url="jdbc:sqlite:TimeDependent.db";
+        //String url = "jdbc:sqlite:/Users/yvonnezino/IdeaProjects/CP274Final/src/CP274Final/TimeDependent.db";
         // create a connection to the database
         conn = DriverManager.getConnection(url);
 
@@ -54,7 +57,7 @@ public class DbTools {
         return result;
     }
 
-    private static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
+    public static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS");
         ResultSet rs = ps.executeQuery();
@@ -71,11 +74,11 @@ public class DbTools {
     }
     //returns a hashmap containing each day linked to the corresponding value for the specified county
     //specify deaths or confirmed cases with field variable
-    private static HashMap<String, Integer> getByFips(String field, double fips) throws Exception {
+    public static LinkedHashMap<String, Integer> getByFips(String field, double fips) throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM " + field);
         ResultSet rs = ps.executeQuery();
-        HashMap<String, Integer> result = new HashMap<>();
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
 
         //this is very hacky, and should probably be done better eventually
         ArrayList<String> days = new ArrayList<>();
@@ -100,5 +103,9 @@ public class DbTools {
         }
 
         return result;
+    }
+
+    public void findTable(){
+
     }
 }
