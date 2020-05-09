@@ -24,4 +24,13 @@ For tomorrow: A plan for the project -> goals, speculation about challenges
 Meaning of "package" in Java
 
 data files in repositories
+- script to download from cloud
+- gitignore
 
+Afternoon.
+
+IntelliJ Projects & repos
+
+Work on JavaFX
+
+Howto deal with git conflicts
