@@ -1,4 +1,3 @@
-//package CP274Final.src.sample;
 package sample;
 
 import java.sql.Connection;
@@ -87,7 +86,7 @@ public class DbTools {
         while(month < 5 || day < 6){
             day++;
             if((day == 32 && month == 1) || (day == 29 && month == 2) || (day == 32 && month == 3)
-            || (day == 31 && month == 4)){
+                    || (day == 31 && month == 4)){
                 day = 1;
                 month++;
             }
@@ -104,8 +103,12 @@ public class DbTools {
 
         return result;
     }
+<<<<<<< HEAD
 
     public void findTable(){
 
     }
 }
+=======
+}
+>>>>>>> e7b11f3756843bb6b60cff72feb5968d972a6a76

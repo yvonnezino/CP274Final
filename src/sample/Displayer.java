@@ -20,6 +20,7 @@ import java.util.function.BiConsumer;
 
 public class Displayer implements Initializable {
         DbTools tool = new DbTools();
+        Controller displayConrtrol = new Controller();
 
         @FXML
         private Label deadNumber;
@@ -40,10 +41,31 @@ public class Displayer implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-            //Need to figure out how to get data out of the Arraylists for each county, state, country
-//            deadNumber.setText();
-//            recoveredNumber.setText();
-//            infectedNumber.setText();
+            try {
+                if (tool.getAllCounties().contains(displayConrtrol.area)){
+                    int cur=0;
+                    ArrayList<County> county = tool.getAllCounties();
+                    int index = county.indexOf(displayConrtrol.area);
+                    while (cur != index){
+                        cur++;
+                    }
+                    deadNumber.setText(Integer.toString(county.get(cur).getAll("deaths").size()));
+                    infectedNumber.setText(Integer.toString(county.get(cur).getAll("confirmed").size()));
+                }
+                else{
+                    int cur=0;
+                    ArrayList<State> state = tool.getAllStates();
+                    int index = state.indexOf(displayConrtrol.area);
+                    while (cur != index){
+                        cur++;
+                    }
+                    deadNumber.setText(Integer.toString(state.get(cur).deaths));
+                    infectedNumber.setText(Integer.toString(state.get(cur).cases));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
 
             //create line graph
