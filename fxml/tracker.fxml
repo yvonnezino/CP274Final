@@ -48,11 +48,6 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="recoveredTitle" layoutX="719.0" layoutY="346.0" text="Number Recovered" textFill="#f2efef">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="deadTitle" layoutX="737.0" layoutY="572.0" text="Number Dead" textFill="#fcfcfc">
                      <font>
                         <Font size="15.0" />

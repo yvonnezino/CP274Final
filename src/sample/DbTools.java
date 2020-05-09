@@ -54,7 +54,7 @@ public class DbTools {
         return result;
     }
 
-    private static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
+    public static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS");
         ResultSet rs = ps.executeQuery();
@@ -84,7 +84,7 @@ public class DbTools {
         while(month < 5 || day < 6){
             day++;
             if((day == 32 && month == 1) || (day == 29 && month == 2) || (day == 32 && month == 3)
-            || (day == 31 && month == 4)){
+                    || (day == 31 && month == 4)){
                 day = 1;
                 month++;
             }
