@@ -18,7 +18,7 @@ public class DbTools {
         // create a connection to the database
         conn = DriverManager.getConnection(url);
 
-        System.out.println("Connection to SQLite has been established.");
+        //System.out.println("Connection to SQLite has been established.");
 
         return conn;
     }
@@ -53,29 +53,30 @@ public class DbTools {
                         getCountiesByStateName(rs.getString("Province_State"))));
             }
         }
+        rs.close();
         return result;
     }
 
     public static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
         Connection con = getConnection();
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS WHERE province_state =  ?");
+        ps.setString(1,stateName);
         ResultSet rs = ps.executeQuery();
         ArrayList<County> result = new ArrayList<County>();
         while(rs.next()){
-            if(rs.getString("Province_State").equals(stateName)){
                 result.add(new County(rs.getDouble("FIPS"), rs.getString("Admin2"),
                         getByFips("ConfirmedUS", rs.getDouble("FIPS")),
                         getByFips("DeathsUS", rs.getDouble("FIPS"))));
-            }
         }
-
+        rs.close();
         return result;
     }
     //returns a hashmap containing each day linked to the corresponding value for the specified county
     //specify deaths or confirmed cases with field variable
     public static LinkedHashMap<String, Integer> getByFips(String field, double fips) throws Exception {
         Connection con = getConnection();
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM " + field);
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM " + field + " WHERE fips = ?");
+        ps.setDouble(1, fips);
         ResultSet rs = ps.executeQuery();
         LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
 
@@ -94,21 +95,19 @@ public class DbTools {
         }
 
         while(rs.next()){
-            if(rs.getDouble("FIPS") == fips){
                 for(int i = 0; i < days.size(); i++){
                     result.put(days.get(i), rs.getInt(days.get(i)));
                 }
-            }
         }
-
+        rs.close();
         return result;
     }
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
     public void findTable(){
 
     }
 }
-=======
-}
->>>>>>> e7b11f3756843bb6b60cff72feb5968d972a6a76
+//=======
+
+//>>>>>>> e7b11f3756843bb6b60cff72feb5968d972a6a76
