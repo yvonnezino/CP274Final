@@ -1,6 +1,5 @@
 package sample;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -80,13 +79,18 @@ public class Controller implements Initializable {
             while (cur != index){
                 cur++;
             }
+            String latestNumDeaths=Integer.toString(county.get(cur).getAll("deaths").get(county.get(cur).getAll("deaths").size()-1));
+            String latestNumCases=Integer.toString(county.get(cur).getAll("confirmed").get(county.get(cur).getAll("confirmed").size()-1));
+
             countyLabel.setText(county.get(cur).name);
-            deadNumber.setText(Integer.toString(county.get(cur).getAll("deaths").get(county.get(cur).getAll("deaths").size()-1)));
-            infectedNumber.setText(Integer.toString(county.get(cur).getAll("confirmed").get(county.get(cur).getAll("confirmed").size()-1)));
+            infectedNumber.setText(latestNumCases);
+            deadNumber.setText(latestNumDeaths);
+
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Infected", county.get(cur).getAll("confirmed").get(county.get(cur).getAll("confirmed").size()-1)),
-                            new PieChart.Data("Deaths", county.get(cur).getAll("confirmed").get(county.get(cur).getAll("deaths").size()-1)));
+                            new PieChart.Data("Confirmed Cases",Integer.parseInt(latestNumCases)),
+                            new PieChart.Data("Deaths",Integer.parseInt(latestNumDeaths)));
+
             pie.setData(pieChartData);
 
             deathSeries.getData().clear();
@@ -108,11 +112,16 @@ public class Controller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String confirmedLa="";
+        String deathsLa="";
         try {
             ArrayList<County> county = fxToolGetter.getAllCounties();
+            confirmedLa=Integer.toString(county.get(209).getAll("confirmed").get(county.get(209).getAll("confirmed").size()-1));
+            deathsLa=Integer.toString(county.get(209).getAll("deaths").get(county.get(209).getAll("deaths").size()-1));
+
             countyLabel.setText(county.get(209).name);
-            deadNumber.setText(Integer.toString(county.get(209).getAll("deaths").get(county.get(209).getAll("deaths").size()-1)));
-            infectedNumber.setText(Integer.toString(county.get(209).getAll("confirmed").get(county.get(209).getAll("confirmed").size()-1)));
+            infectedNumber.setText(confirmedLa);
+            deadNumber.setText(deathsLa);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,8 +130,8 @@ public class Controller implements Initializable {
             ArrayList<County> county = fxToolGetter.getAllCounties();
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Infected", county.get(209).getAll("confirmed").get(county.get(209).getAll("confirmed").size()-1)),
-                            new PieChart.Data("Deaths", county.get(209).getAll("confirmed").get(county.get(209).getAll("deaths").size()-1)));
+                            new PieChart.Data("Confirmed Cases",Integer.parseInt(confirmedLa)),
+                            new PieChart.Data("Deaths", Integer.parseInt(deathsLa)));
             pie.setData(pieChartData);
         } catch (Exception e) {
             e.printStackTrace();
