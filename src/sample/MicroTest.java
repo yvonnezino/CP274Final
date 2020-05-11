@@ -1,3 +1,4 @@
+//package CP274Final.src.sample;
 package sample;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,8 @@ public class MicroTest {
     DbTools newconnection = new DbTools();
     Controller control = new Controller();
 
+    public MicroTest() throws Exception {
+    }
 
 
     @Test

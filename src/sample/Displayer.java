@@ -37,9 +37,11 @@ public class Displayer implements Initializable {
         @FXML
         private PieChart pieChart;
 
+    public Displayer() throws Exception {
+    }
 
 
-        @Override
+    @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
             try {
                 if (tool.getAllCounties().contains(displayConrtrol.area)){

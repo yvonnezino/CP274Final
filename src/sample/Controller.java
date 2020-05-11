@@ -1,3 +1,4 @@
+//package CP274Final.src.sample;
 package sample;
 
 import javafx.collections.FXCollections;
@@ -52,16 +53,18 @@ public class Controller implements Initializable {
 
     public County area;
     DbTools fxToolGetter = new DbTools();
+    public ArrayList<County> allCounties = fxToolGetter.getAllCounties();
+
+    public Controller() throws Exception {
+    }
 
 
     @FXML
     public String getName() {
-        //System.out.println(areaSearch.getText());
         return areaSearch.getText(); }
 
     @FXML
     private String getState() {
-        //System.out.println(stateSearch.getText());
         return stateSearch.getText();
     }
 
@@ -71,18 +74,18 @@ public class Controller implements Initializable {
 
     @FXML
     public void buttonControl() throws Exception {
-        if (fxToolGetter.getAllCounties().contains(getCounty())){
+        if (allCounties.contains(getCounty())){
             area = getCounty();
             int cur=0;
-            ArrayList<County> county = fxToolGetter.getAllCounties();
-            int index = county.indexOf(area);
+            //ArrayList<County> county = fxToolGetter.getAllCounties();
+            int index = allCounties.indexOf(area);
             while (cur != index){
                 cur++;
             }
-            String latestNumDeaths=Integer.toString(county.get(cur).getAll("deaths").get(county.get(cur).getAll("deaths").size()-1));
-            String latestNumCases=Integer.toString(county.get(cur).getAll("confirmed").get(county.get(cur).getAll("confirmed").size()-1));
+            String latestNumDeaths=Integer.toString(allCounties.get(cur).getAll("deaths").get(allCounties.get(cur).getAll("deaths").size()-1));
+            String latestNumCases=Integer.toString(allCounties.get(cur).getAll("confirmed").get(allCounties.get(cur).getAll("confirmed").size()-1));
 
-            countyLabel.setText(county.get(cur).name);
+            countyLabel.setText(allCounties.get(cur).name);
             infectedNumber.setText(latestNumCases);
             deadNumber.setText(latestNumDeaths);
 
@@ -95,7 +98,7 @@ public class Controller implements Initializable {
 
             deathSeries.getData().clear();
             confirmedSeries.getData().clear();
-            displayLineGraph(county.get(cur).getFips());
+            displayLineGraph(allCounties.get(cur).getFips());
         }
         else{
             final Stage dialog = new Stage();
@@ -115,19 +118,17 @@ public class Controller implements Initializable {
         String confirmedLa="";
         String deathsLa="";
         try {
-            ArrayList<County> county = fxToolGetter.getAllCounties();
-            confirmedLa=Integer.toString(county.get(209).getAll("confirmed").get(county.get(209).getAll("confirmed").size()-1));
-            deathsLa=Integer.toString(county.get(209).getAll("deaths").get(county.get(209).getAll("deaths").size()-1));
-
-            countyLabel.setText(county.get(209).name);
+            confirmedLa = Integer.toString(allCounties.get(209).getAll("confirmed").get(allCounties.get(209).getAll("confirmed").size() - 1));
+            deathsLa = Integer.toString(allCounties.get(209).getAll("deaths").get(allCounties.get(209).getAll("deaths").size() - 1));
+        }
+        catch (Exception e) {
+                e.printStackTrace();
+        }
+            countyLabel.setText(allCounties.get(209).name);
             infectedNumber.setText(confirmedLa);
             deadNumber.setText(deathsLa);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         try {
-            ArrayList<County> county = fxToolGetter.getAllCounties();
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
                             new PieChart.Data("Confirmed Cases",Integer.parseInt(confirmedLa)),
