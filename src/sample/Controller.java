@@ -1,7 +1,10 @@
 package sample;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.beans.property.StringProperty;
@@ -22,14 +25,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 // Used to add functionality to button and search bar in user interface
-public class Controller {
+public class Controller implements Initializable {
     @FXML
     private Button searchButton;
     @FXML
     private TextField areaSearch;
     @FXML
     private Label deadNumber;
-
+    @FXML
+    private Label countyLabel;
     @FXML
     private Label infectedNumber;
     @FXML
@@ -43,15 +47,19 @@ public class Controller {
     @FXML
     private TextField stateSearch;
 
+
     public County area;
     DbTools fxToolGetter = new DbTools();
 
 
     @FXML
-    public String getName() { return areaSearch.getText(); }
+    public String getName() {
+        //System.out.println(areaSearch.getText());
+        return areaSearch.getText(); }
 
     @FXML
     private String getState() {
+        //System.out.println(stateSearch.getText());
         return stateSearch.getText();
     }
 
@@ -63,6 +71,21 @@ public class Controller {
     public void buttonControl() throws Exception {
         if (fxToolGetter.getAllCounties().contains(getCounty())){
             area = getCounty();
+            int cur=0;
+            ArrayList<County> county = fxToolGetter.getAllCounties();
+            int index = county.indexOf(area);
+            while (cur != index){
+                cur++;
+            }
+            countyLabel.setText(county.get(cur).name);
+            deadNumber.setText(Integer.toString(county.get(cur).getAll("deaths").get(county.get(cur).getAll("deaths").size()-1)));
+            infectedNumber.setText(Integer.toString(county.get(cur).getAll("confirmed").get(county.get(cur).getAll("confirmed").size()-1)));
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Infected", county.get(cur).getAll("confirmed").get(county.get(cur).getAll("confirmed").size()-1)),
+                            new PieChart.Data("Deaths", county.get(cur).getAll("confirmed").get(county.get(cur).getAll("deaths").size()-1)));
+            pie.setData(pieChartData);
+
         }
         else{
             final Stage dialog = new Stage();
@@ -77,35 +100,27 @@ public class Controller {
         }
 
     }
-
-
-
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            if (fxToolGetter.getAllCounties().contains(area)){
-                int cur=0;
-                ArrayList<County> county = fxToolGetter.getAllCounties();
-                int index = county.indexOf(area);
-                while (cur != index){
-                    cur++;
-                }
-                deadNumber.setText(Integer.toString(county.get(cur).getAll("deaths").size()));
-                infectedNumber.setText(Integer.toString(county.get(cur).getAll("confirmed").size()));
-            }
-            else{
-                int cur=0;
-                ArrayList<State> state = fxToolGetter.getAllStates();
-                int index = state.indexOf(area);
-                while (cur != index){
-                    cur++;
-                }
-                deadNumber.setText(Integer.toString(state.get(cur).deaths));
-                infectedNumber.setText(Integer.toString(state.get(cur).cases));
-            }
+            ArrayList<County> county = fxToolGetter.getAllCounties();
+            countyLabel.setText(county.get(209).name);
+            deadNumber.setText(Integer.toString(county.get(209).getAll("deaths").get(county.get(209).getAll("deaths").size()-1)));
+            infectedNumber.setText(Integer.toString(county.get(209).getAll("confirmed").get(county.get(209).getAll("confirmed").size()-1)));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        try {
+            ArrayList<County> county = fxToolGetter.getAllCounties();
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Infected", county.get(209).getAll("confirmed").get(county.get(209).getAll("confirmed").size()-1)),
+                            new PieChart.Data("Deaths", county.get(209).getAll("confirmed").get(county.get(209).getAll("deaths").size()-1)));
+            pie.setData(pieChartData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         //create line graph

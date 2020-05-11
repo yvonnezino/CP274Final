@@ -60,6 +60,11 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></TextField>
+                  <Label fx:id="countyLabel" layoutX="477.0" layoutY="114.0" text="Name" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
         </items>

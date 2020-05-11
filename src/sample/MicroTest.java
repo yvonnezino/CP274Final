@@ -20,12 +20,11 @@ public class MicroTest {
 
 
     @Test
-    void testButton() throws Exception {
-        County count = control.getCounty();
+    void testCountyByStateAndName() throws Exception {
         County first = newconnection
-                .getAllCounties()
-                .get(5);
-        assertEquals(count, first);
+                .getCountyByNameAndState("Autauga", "Alabama");
+        String name = first.name;
+        name.equals("Autuaga");
     }
 
     @Test
