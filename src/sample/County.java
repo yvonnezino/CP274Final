@@ -42,4 +42,17 @@ public class County {
     public String getName(){
         return name;
     }
+
+    public double getFips(){
+        return fips;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof County)){
+            return false;
+        }
+        County c = (County)(o);
+        return c.getName().equals(name) && c.getFips() == fips;
+    }
 }
