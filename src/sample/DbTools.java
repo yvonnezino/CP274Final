@@ -10,8 +10,11 @@ import java.util.LinkedHashMap;
 
 //Tools for getting data from the database (only works for US data right now (if it works at all))
 public class DbTools {
+    static Connection conn = null;
     public static Connection getConnection() throws Exception {
-        Connection conn = null;
+        if(conn!=null){
+            return conn;
+        }
         // db parameters
         String url="jdbc:sqlite:TimeDependent.db";
         //String url = "jdbc:sqlite:/Users/yvonnezino/IdeaProjects/CP274Final/src/CP274Final/TimeDependent.db";
