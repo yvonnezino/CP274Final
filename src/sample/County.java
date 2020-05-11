@@ -38,4 +38,8 @@ public class County {
             throw new Exception("Value must be \"confirmed\" or \"deaths\"");
         }
     }
+
+    public String getName(){
+        return name;
+    }
 }

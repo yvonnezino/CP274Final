@@ -71,6 +71,19 @@ public class DbTools {
         rs.close();
         return result;
     }
+
+    //returns a county object of given name and state
+    public County getCountyByNameAndState(String name, String stateName) throws Exception {
+        ArrayList<County> counties = getCountiesByStateName(stateName);
+        for(int i = 0; i < counties.size(); i++){
+            if(counties.get(i).getName().equals(name)){
+                return counties.get(i);
+            }
+        }
+        throw new Exception("county not found");
+    }
+
+
     //returns a hashmap containing each day linked to the corresponding value for the specified county
     //specify deaths or confirmed cases with field variable
     public static LinkedHashMap<String, Integer> getByFips(String field, double fips) throws Exception {
