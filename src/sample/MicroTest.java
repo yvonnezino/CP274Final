@@ -15,6 +15,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MicroTest {
     DbTools newconnection = new DbTools();
+    Controller control = new Controller();
+
+
+
+    @Test
+    void testButton() throws Exception {
+        County count = control.getCounty();
+        County first = newconnection
+                .getAllCounties()
+                .get(5);
+        assertEquals(count, first);
+    }
 
     @Test
     void testCases() throws Exception {
@@ -46,9 +58,9 @@ public class MicroTest {
     void testCounty() throws Exception {
         County first = newconnection
                 .getAllCounties()
-                .get(5) ;
+                .get(1309) ;
         String name = first.name;
-        name.equals("Autauga");
+        name.equals("Saginaw");
         }
 
 

@@ -29,8 +29,7 @@ public class Controller {
     private TextField areaSearch;
     @FXML
     private Label deadNumber;
-    @FXML
-    private Label recoveredNumber;
+
     @FXML
     private Label infectedNumber;
     @FXML
@@ -40,23 +39,30 @@ public class Controller {
     @FXML
     private NumberAxis yAxis;
     @FXML
-    private PieChart pieChart;
+    private PieChart pie;
+    @FXML
+    private TextField stateSearch;
 
-    public String area;
+    public County area;
     DbTools fxToolGetter = new DbTools();
 
 
     @FXML
-    public String getText() { return areaSearch.getText(); }
+    public String getName() { return areaSearch.getText(); }
+
+    @FXML
+    private String getState() {
+        return stateSearch.getText();
+    }
+
+    public County getCounty() throws Exception {
+        return fxToolGetter.getCountyByNameAndState(getName(),getState());
+    }
 
     @FXML
     public void buttonControl() throws Exception {
-        if (fxToolGetter.getAllCounties().contains(getText())){
-            area = getText();
-
-        }
-        if (fxToolGetter.getAllStates().contains(getText())){
-            area = getText();
+        if (fxToolGetter.getAllCounties().contains(getCounty())){
+            area = getCounty();
         }
         else{
             final Stage dialog = new Stage();
@@ -65,7 +71,7 @@ public class Controller {
             dialog.initOwner(primaryStage);
             VBox dialogVbox = new VBox(20);
             dialogVbox.getChildren().add(new Text("No Data for Desired Location"));
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            Scene dialogScene = new Scene(dialogVbox, 10, 200);
             dialog.setScene(dialogScene);
             dialog.show();
         }
