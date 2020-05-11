@@ -47,6 +47,9 @@ public class Controller implements Initializable {
     @FXML
     private TextField stateSearch;
 
+    XYChart.Series confirmedSeries=new XYChart.Series();
+    XYChart.Series deathSeries=new XYChart.Series();
+    boolean isAddedToGraph=false;
 
     public County area;
     DbTools fxToolGetter = new DbTools();
@@ -86,6 +89,9 @@ public class Controller implements Initializable {
                             new PieChart.Data("Deaths", county.get(cur).getAll("confirmed").get(county.get(cur).getAll("deaths").size()-1)));
             pie.setData(pieChartData);
 
+            deathSeries.getData().clear();
+            confirmedSeries.getData().clear();
+            displayLineGraph(county.get(cur).getFips());
         }
         else{
             final Stage dialog = new Stage();
@@ -121,20 +127,18 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        displayLineGraph(6037.0);
 
+    }
 
+    public void displayLineGraph(Double fips){
         //create line graph
-        XYChart.Series confirmedSeries=new XYChart.Series();
-        XYChart.Series deathSeries=new XYChart.Series();
         confirmedSeries.setName("Confirmed Cases");
         deathSeries.setName("Deaths");
-        //need the fips number from search;initialize
-        double fips=6037.0;
 
         try {
             Map<String,Integer> confirmedDates=fxToolGetter.getByFips("ConfirmedUS",fips);
             for(Map.Entry<String,Integer> entry:confirmedDates.entrySet()){
-                System.out.println("Key: "+entry.getKey()+"Value: "+entry.getValue());
                 confirmedSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
             }
         } catch (Exception e) {
@@ -148,11 +152,12 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        lineChart.getData().addAll(confirmedSeries,deathSeries);
+        if(isAddedToGraph==false){
+            lineChart.getData().addAll(confirmedSeries, deathSeries);
+        }
+        isAddedToGraph=true;
 
     }
-
 
 
 
