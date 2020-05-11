@@ -53,6 +53,17 @@ public class County {
             return false;
         }
         County c = (County)(o);
-        return c.getName().equals(name) && c.getFips() == fips;
+
+        return nullTrue(c.getName(), name) && nullTrue(getFips(), fips);
+    }
+
+    private boolean nullTrue(Object a, Object b){
+        if(a == null && b == null){
+            return true;
+        }else if(a == null || b == null){
+            return false;
+        }else{
+            return a.equals(b);
+        }
     }
 }
