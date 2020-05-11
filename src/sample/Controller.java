@@ -29,8 +29,7 @@ public class Controller {
     private TextField areaSearch;
     @FXML
     private Label deadNumber;
-    @FXML
-    private Label recoveredNumber;
+
     @FXML
     private Label infectedNumber;
     @FXML
@@ -40,23 +39,31 @@ public class Controller {
     @FXML
     private NumberAxis yAxis;
     @FXML
-    private PieChart pieChart;
+    private PieChart pie;
+    @FXML
+    private TextField stateSearch;
 
     public String area;
+    public String state;
     DbTools fxToolGetter = new DbTools();
 
 
     @FXML
-    public String getText() { return areaSearch.getText(); }
+    public String getName() { return areaSearch.getText(); }
+
+    @FXML
+    private void getState() throws Exception {
+        state = stateSearch.getText();
+    }
 
     @FXML
     public void buttonControl() throws Exception {
-        if (fxToolGetter.getAllCounties().contains(getText())){
-            area = getText();
+        if (fxToolGetter.getAllCounties().contains(getName())){
+            area = getName();
 
         }
-        if (fxToolGetter.getAllStates().contains(getText())){
-            area = getText();
+        if (fxToolGetter.getAllStates().contains(getName())){
+            area = getName();
         }
         else{
             final Stage dialog = new Stage();
