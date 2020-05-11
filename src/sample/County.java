@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class County {
     private double fips;
-    private String name;
+    public String name;
     private HashMap<String, Integer> confirmed;
     private HashMap<String, Integer> deaths;
 

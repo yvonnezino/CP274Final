@@ -2,9 +2,11 @@ package sample;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -14,6 +16,10 @@ import javafx.stage.Window;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 // Used to add functionality to button and search bar in user interface
 public class Controller {
@@ -21,19 +27,33 @@ public class Controller {
     private Button searchButton;
     @FXML
     private TextField areaSearch;
+    @FXML
+    private Label deadNumber;
+    @FXML
+    private Label recoveredNumber;
+    @FXML
+    private Label infectedNumber;
+    @FXML
+    private LineChart lineChart;
+    @FXML
+    private CategoryAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
+    @FXML
+    private PieChart pieChart;
 
     public String area;
     DbTools fxToolGetter = new DbTools();
 
 
+    @FXML
+    public String getText() { return areaSearch.getText(); }
 
-    public String getText() {
-        return areaSearch.getText();
-    }
-
-    public void buttonCrontrol() throws Exception {
+    @FXML
+    public void buttonControl() throws Exception {
         if (fxToolGetter.getAllCounties().contains(getText())){
             area = getText();
+
         }
         if (fxToolGetter.getAllStates().contains(getText())){
             area = getText();
@@ -51,6 +71,68 @@ public class Controller {
         }
 
     }
+
+
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            if (fxToolGetter.getAllCounties().contains(area)){
+                int cur=0;
+                ArrayList<County> county = fxToolGetter.getAllCounties();
+                int index = county.indexOf(area);
+                while (cur != index){
+                    cur++;
+                }
+                deadNumber.setText(Integer.toString(county.get(cur).getAll("deaths").size()));
+                infectedNumber.setText(Integer.toString(county.get(cur).getAll("confirmed").size()));
+            }
+            else{
+                int cur=0;
+                ArrayList<State> state = fxToolGetter.getAllStates();
+                int index = state.indexOf(area);
+                while (cur != index){
+                    cur++;
+                }
+                deadNumber.setText(Integer.toString(state.get(cur).deaths));
+                infectedNumber.setText(Integer.toString(state.get(cur).cases));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        //create line graph
+        XYChart.Series confirmedSeries=new XYChart.Series();
+        XYChart.Series deathSeries=new XYChart.Series();
+        confirmedSeries.setName("Confirmed Cases");
+        deathSeries.setName("Deaths");
+        //need the fips number from search;initialize
+        double fips=6037.0;
+
+        try {
+            Map<String,Integer> confirmedDates=fxToolGetter.getByFips("ConfirmedUS",fips);
+            for(Map.Entry<String,Integer> entry:confirmedDates.entrySet()){
+                System.out.println("Key: "+entry.getKey()+"Value: "+entry.getValue());
+                confirmedSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Map<String,Integer> deathDates=fxToolGetter.getByFips("DeathsUS",fips);
+            for(Map.Entry<String,Integer> entry:deathDates.entrySet()){
+                deathSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        lineChart.getData().addAll(confirmedSeries,deathSeries);
+
+    }
+
+
 
 
 
