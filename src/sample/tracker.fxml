@@ -56,7 +56,10 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="stateSearch" alignment="CENTER" layoutX="293.0" layoutY="40.0" onAction="#getState" prefHeight="40.0" prefWidth="150.0" promptText="State" />
+                  <TextField fx:id="stateSearch" alignment="CENTER" layoutX="293.0" layoutY="40.0" onAction="#getState" prefHeight="40.0" prefWidth="150.0" promptText="State">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></TextField>
                </children>
             </AnchorPane>
         </items>

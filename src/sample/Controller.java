@@ -43,8 +43,7 @@ public class Controller {
     @FXML
     private TextField stateSearch;
 
-    public String area;
-    public String state;
+    public County area;
     DbTools fxToolGetter = new DbTools();
 
 
@@ -52,18 +51,18 @@ public class Controller {
     public String getName() { return areaSearch.getText(); }
 
     @FXML
-    private void getState() throws Exception {
-        state = stateSearch.getText();
+    private String getState() {
+        return stateSearch.getText();
+    }
+
+    public County getCounty() throws Exception {
+        return fxToolGetter.getCountyByNameAndState(getName(),getState());
     }
 
     @FXML
     public void buttonControl() throws Exception {
-        if (fxToolGetter.getAllCounties().contains(getName())){
-            area = getName();
-
-        }
-        if (fxToolGetter.getAllStates().contains(getName())){
-            area = getName();
+        if (fxToolGetter.getAllCounties().contains(getCounty())){
+            area = getCounty();
         }
         else{
             final Stage dialog = new Stage();
@@ -72,7 +71,7 @@ public class Controller {
             dialog.initOwner(primaryStage);
             VBox dialogVbox = new VBox(20);
             dialogVbox.getChildren().add(new Text("No Data for Desired Location"));
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            Scene dialogScene = new Scene(dialogVbox, 10, 200);
             dialog.setScene(dialogScene);
             dialog.show();
         }
