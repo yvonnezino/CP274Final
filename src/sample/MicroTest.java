@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.sql.Connection;
 import java.util.*;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MicroTest {
     DbTools newconnection = new DbTools();
@@ -63,6 +60,15 @@ public class MicroTest {
                 .get(1309) ;
         String name = first.name;
         name.equals("Saginaw");
+        }
+
+        //Testing that the get getCountyByNameAndState in DbTools gets different data for
+        //counties with the same name in different states
+        @Test
+        void testDuplicateCounties() throws Exception {
+        County sameNameOne= newconnection.getCountyByNameAndState("Cook","Illinois");
+        County sameNameTwo= newconnection.getCountyByNameAndState("Cook","Georgia");
+        assertNotSame(sameNameOne,sameNameTwo);
         }
 
 
