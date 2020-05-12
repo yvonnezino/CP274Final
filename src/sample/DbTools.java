@@ -63,7 +63,7 @@ public class DbTools {
     public static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS WHERE LOWER(province_state) =  ?");
-        ps.setString(1,stateName);
+        ps.setString(1,stateName.toLowerCase());
         ResultSet rs = ps.executeQuery();
         ArrayList<County> result = new ArrayList<County>();
         while(rs.next()){
@@ -79,7 +79,7 @@ public class DbTools {
     public County getCountyByNameAndState(String name, String stateName) throws Exception {
         ArrayList<County> counties = getCountiesByStateName(stateName);
         for(int i = 0; i < counties.size(); i++){
-            if(counties.get(i).getName().toLowerCase().equals(name)){
+            if(counties.get(i).getName().toLowerCase().equals(name.toLowerCase())){
                 //System.out.println(counties.get(i).getAll("deaths").get(counties.get(i).getAll("deaths").size() - 1));
                 return counties.get(i);
             }
