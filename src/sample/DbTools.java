@@ -62,14 +62,14 @@ public class DbTools {
 
     public static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
         Connection con = getConnection();
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS WHERE province_state =  ?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS WHERE LOWER(province_state) =  ?");
         ps.setString(1,stateName);
         ResultSet rs = ps.executeQuery();
         ArrayList<County> result = new ArrayList<County>();
         while(rs.next()){
-                result.add(new County(rs.getDouble("FIPS"), rs.getString("Admin2"),
-                        getByFips("ConfirmedUS", rs.getDouble("FIPS")),
-                        getByFips("DeathsUS", rs.getDouble("FIPS"))));
+            result.add(new County(rs.getDouble("FIPS"), rs.getString("Admin2"),
+                    getByFips("ConfirmedUS", rs.getDouble("FIPS")),
+                    getByFips("DeathsUS", rs.getDouble("FIPS"))));
         }
         rs.close();
         return result;
@@ -79,7 +79,8 @@ public class DbTools {
     public County getCountyByNameAndState(String name, String stateName) throws Exception {
         ArrayList<County> counties = getCountiesByStateName(stateName);
         for(int i = 0; i < counties.size(); i++){
-            if(counties.get(i).getName().equals(name)){
+            if(counties.get(i).getName().toLowerCase().equals(name)){
+                //System.out.println(counties.get(i).getAll("deaths").get(counties.get(i).getAll("deaths").size() - 1));
                 return counties.get(i);
             }
         }
