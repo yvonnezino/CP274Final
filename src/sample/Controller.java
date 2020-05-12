@@ -72,6 +72,7 @@ public class Controller implements Initializable {
         return fxToolGetter.getCountyByNameAndState(getName(),getState());
     }
 
+
     @FXML
     public void buttonControl() throws Exception {
         if (allCounties.contains(getCounty())){
@@ -82,10 +83,10 @@ public class Controller implements Initializable {
             while (cur != index){
                 cur++;
             }
-            String latestNumDeaths=Integer.toString(allCounties.get(cur).getAll("deaths").get(allCounties.get(cur).getAll("deaths").size()-1));
-            String latestNumCases=Integer.toString(allCounties.get(cur).getAll("confirmed").get(allCounties.get(cur).getAll("confirmed").size()-1));
+            String latestNumDeaths=Integer.toString(area.getAll("deaths").get(area.getAll("deaths").size()-1));
+            String latestNumCases=Integer.toString(area.getAll("confirmed").get(area.getAll("confirmed").size()-1));
 
-            countyLabel.setText(allCounties.get(cur).name);
+            countyLabel.setText(area.name);
             infectedNumber.setText(latestNumCases);
             deadNumber.setText(latestNumDeaths);
 
@@ -98,7 +99,7 @@ public class Controller implements Initializable {
 
             deathSeries.getData().clear();
             confirmedSeries.getData().clear();
-            displayLineGraph(allCounties.get(cur).getFips());
+            displayLineGraph(area.getFips());
         }
         else{
             final Stage dialog = new Stage();
