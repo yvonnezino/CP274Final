@@ -7,20 +7,20 @@ import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.sql.Connection;
-import java.util.*;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static sample.DataRetriever.update;
 
 public class MicroTest {
     DbTools newconnection = new DbTools();
     Controller control = new Controller();
 
     public MicroTest() throws Exception {
+
     }
 
+    @Test
+    void dataRetrievalTest() throws Exception {
+        System.out.println(update("Los Angeles", "California", "deaths"));
+    }
 
     @Test
     void testCountyByStateAndName() throws Exception {
