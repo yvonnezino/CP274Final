@@ -57,6 +57,8 @@ public class County {
         return nullTrue(c.getName(), name) && nullTrue(getFips(), fips);
     }
 
+
+    // Helper method for Equals method
     private boolean nullTrue(Object a, Object b){
         if(a == null && b == null){
             return true;

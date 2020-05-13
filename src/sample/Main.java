@@ -1,4 +1,3 @@
-//package CP274Final.src.sample;
 package sample;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +10,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("tracker.fxml"));
-        primaryStage.setTitle("Chart View");
-        primaryStage.setScene(new Scene(root, 990, 900));
+        primaryStage.setTitle("COVID Tracker");
+        primaryStage.setScene(new Scene(root,1000, 800));
         primaryStage.show();
     }
 

@@ -60,21 +60,26 @@ public class Controller implements Initializable {
 
 
     @FXML
+    // Method to get the county name out of the UI
     public String getName() {
         return areaSearch.getText(); }
 
     @FXML
+    // Method to get the state name out of the UI
     private String getState() {
         return stateSearch.getText();
     }
 
+    // Helper method to get the County object thats associated to the county and state text from the UI
     public County getCounty() throws Exception {
         return fxToolGetter.getCountyByNameAndState(getName(),getState());
     }
 
 
     @FXML
+    // Updates the UI data when button is clicked
     public void buttonControl() throws Exception {
+        // if county name not a real county error message pops up
         if (allCounties.contains(getCounty())){
             area = getCounty();
             int cur=0;
@@ -83,13 +88,16 @@ public class Controller implements Initializable {
             while (cur != index){
                 cur++;
             }
+            // Gets the number of deaths and infected cases from the desired county
             String latestNumDeaths=Integer.toString(area.getAll("deaths").get(area.getAll("deaths").size()-1));
             String latestNumCases=Integer.toString(area.getAll("confirmed").get(area.getAll("confirmed").size()-1));
 
+            // updates the numbers and county name
             countyLabel.setText(area.name);
             infectedNumber.setText(latestNumCases);
             deadNumber.setText(latestNumDeaths);
 
+            // Updates the pie charts, presents infected vs dead
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
                             new PieChart.Data("Confirmed Cases",Integer.parseInt(latestNumCases)),
@@ -99,6 +107,7 @@ public class Controller implements Initializable {
 
             deathSeries.getData().clear();
             confirmedSeries.getData().clear();
+            //sets line graph for desirec county
             displayLineGraph(area.getFips());
         }
         else{
@@ -115,6 +124,7 @@ public class Controller implements Initializable {
 
     }
     @Override
+    // Method that updates the UI at the start of the program, program starts with info from Los Angeles
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String confirmedLa="";
         String deathsLa="";
@@ -125,11 +135,13 @@ public class Controller implements Initializable {
         catch (Exception e) {
                 e.printStackTrace();
         }
+            // sets labels for number of cases, dead, and county name
             countyLabel.setText(allCounties.get(209).name);
             infectedNumber.setText(confirmedLa);
             deadNumber.setText(deathsLa);
 
         try {
+            // sets pie chart
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
                             new PieChart.Data("Confirmed Cases",Integer.parseInt(confirmedLa)),
@@ -138,10 +150,12 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // sets line chart
         displayLineGraph(6037.0);
 
     }
 
+    // Helper method to update the data in the line graph
     public void displayLineGraph(Double fips){
         //create line graph
         confirmedSeries.setName("Confirmed Cases");

@@ -41,6 +41,7 @@ public class DbTools {
         return result;
     }
 
+    // Returns all US States
     public static ArrayList<State> getAllStates() throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = con.prepareStatement("SELECT Province_State FROM DeathsUS");
@@ -60,6 +61,7 @@ public class DbTools {
         return result;
     }
 
+    // Returns list of counties based on inputted state name
     public static ArrayList<County> getCountiesByStateName(String stateName) throws Exception {
         Connection con = getConnection();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM DeathsUS WHERE province_state =  ?");
@@ -74,6 +76,8 @@ public class DbTools {
         rs.close();
         return result;
     }
+
+
 
     //returns a county object of given name and state
     public County getCountyByNameAndState(String name, String stateName) throws Exception {
@@ -118,12 +122,6 @@ public class DbTools {
         rs.close();
         return result;
     }
-//<<<<<<< HEAD
 
-    public void findTable(){
-
-    }
 }
-//=======
 
-//>>>>>>> e7b11f3756843bb6b60cff72feb5968d972a6a76
