@@ -20,6 +20,7 @@ public class MicroTest {
 
 
     @Test
+    // Test to see if county can be retired from UI that gives county and state name
     void testCountyByStateAndName() throws Exception {
         County first = newconnection
                 .getCountyByNameAndState("Autauga", "Alabama");
@@ -28,6 +29,7 @@ public class MicroTest {
     }
 
     @Test
+    //Test to see if county infected number can be retrieved
     void testCases() throws Exception {
         County first = newconnection
                 .getAllCounties()
@@ -37,6 +39,7 @@ public class MicroTest {
     }
 
     @Test
+        //Test to see if county dead number can be retrieved
     void testDeaths() throws Exception {
         County first = newconnection
                 .getAllCounties()
@@ -47,6 +50,7 @@ public class MicroTest {
 
 
     @Test
+    // Test to see if connection can be achieved between program and database
     void testCon() throws Exception {
         Connection con = newconnection
                 .getConnection();
@@ -54,6 +58,7 @@ public class MicroTest {
     }
 
     @Test
+    // Test to see if countys are added to County ArrayList from database
     void testCounty() throws Exception {
         County first = newconnection
                 .getAllCounties()

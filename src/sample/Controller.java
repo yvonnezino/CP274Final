@@ -107,7 +107,7 @@ public class Controller implements Initializable {
 
             deathSeries.getData().clear();
             confirmedSeries.getData().clear();
-            //sets line graph for desirec county
+            //sets line graph for desired county
             displayLineGraph(area.getFips());
         }
         else{
