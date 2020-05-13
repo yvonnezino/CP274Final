@@ -1,5 +1,16 @@
 # CP274Final
 
+What to use for: 
+
+This gives the total number of COVID cases and deaths based on the county of the United States the user looks up. Linegraphs and pie charts will better help visualize the how the virus has progressed in the county over time. 
+
+How to Use:
+
+A library for javafx and sqlite are needed to run this program, a database is also needed which should be labled TimeDependent.db. This can be created from the TimeDependent.sql file found in the repository. 
+Run this from the main class. Type a state and a county for the data you would like to examine and click the search button. 
+
+Our original Goals:
+
 For our final project we decided we wanted to work with visualizing databases in JavaFX. We thought working in
 a contracting setting for the CDC to create a program that viuslly shows data changes in COVID-19 cases, deaths, and recovered.
 We wanted to use realtie data as its uploaded form the CDC to update our database and create a real time COVID-19 tracker program.
