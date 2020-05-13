@@ -1,4 +1,3 @@
-//package CP274Final.src.sample;
 package sample;
 
 import javafx.collections.FXCollections;
@@ -46,7 +45,7 @@ public class Controller implements Initializable {
     private PieChart pie;
     @FXML
     private TextField stateSearch;
-
+    private DataRetriever getLiveData=new DataRetriever();
     XYChart.Series confirmedSeries=new XYChart.Series();
     XYChart.Series deathSeries=new XYChart.Series();
     boolean isAddedToGraph=false;
@@ -82,7 +81,7 @@ public class Controller implements Initializable {
         // if county name not a real county error message pops up
         if (allCounties.contains(getCounty())){
             area = getCounty();
-            int cur=0;
+            /**int cur=0;
             //ArrayList<County> county = fxToolGetter.getAllCounties();
             int index = allCounties.indexOf(area);
             while (cur != index){
@@ -91,17 +90,19 @@ public class Controller implements Initializable {
             // Gets the number of deaths and infected cases from the desired county
             String latestNumDeaths=Integer.toString(area.getAll("deaths").get(area.getAll("deaths").size()-1));
             String latestNumCases=Integer.toString(area.getAll("confirmed").get(area.getAll("confirmed").size()-1));
-
+            **/
+            int latestNumCases=getLiveData.update(area.getName(),getState(),"confirmed");
+            int latestNumDeaths=getLiveData.update(area.getName(),getState(),"deaths");
             // updates the numbers and county name
             countyLabel.setText(area.name);
-            infectedNumber.setText(latestNumCases);
-            deadNumber.setText(latestNumDeaths);
+            infectedNumber.setText(String.valueOf(latestNumCases));
+            deadNumber.setText(String.valueOf(latestNumDeaths));
 
             // Updates the pie charts, presents infected vs dead
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Confirmed Cases",Integer.parseInt(latestNumCases)),
-                            new PieChart.Data("Deaths",Integer.parseInt(latestNumDeaths)));
+                            new PieChart.Data("Confirmed Cases",latestNumCases),
+                            new PieChart.Data("Deaths",latestNumDeaths));
 
             pie.setData(pieChartData);
 
@@ -126,7 +127,7 @@ public class Controller implements Initializable {
     @Override
     // Method that updates the UI at the start of the program, program starts with info from Los Angeles
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String confirmedLa="";
+        /**String confirmedLa="";
         String deathsLa="";
         try {
             confirmedLa = Integer.toString(allCounties.get(209).getAll("confirmed").get(allCounties.get(209).getAll("confirmed").size() - 1));
@@ -134,18 +135,30 @@ public class Controller implements Initializable {
         }
         catch (Exception e) {
                 e.printStackTrace();
+        }**/
+        int confirmedLa= 0;
+        try {
+            confirmedLa = getLiveData.update("Los Angeles","California","confirmed");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-            // sets labels for number of cases, dead, and county name
+        int deathsLa= 0;
+        try {
+            deathsLa = getLiveData.update("Los Angeles","California","deaths");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // sets labels for number of cases, dead, and county name
             countyLabel.setText(allCounties.get(209).name);
-            infectedNumber.setText(confirmedLa);
-            deadNumber.setText(deathsLa);
+            infectedNumber.setText(String.valueOf(confirmedLa));
+            deadNumber.setText(String.valueOf(deathsLa));
 
         try {
             // sets pie chart
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Confirmed Cases",Integer.parseInt(confirmedLa)),
-                            new PieChart.Data("Deaths", Integer.parseInt(deathsLa)));
+                            new PieChart.Data("Confirmed Cases",confirmedLa),
+                            new PieChart.Data("Deaths", deathsLa));
             pie.setData(pieChartData);
         } catch (Exception e) {
             e.printStackTrace();
