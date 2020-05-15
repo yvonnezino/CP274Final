@@ -1,3 +1,4 @@
+//package CP274Final.src.sample;
 package sample;
 
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class DbTools {
         }
         // db parameters
         String url="jdbc:sqlite:TimeDependent.db";
-        //String url = "jdbc:sqlite:/Users/yvonnezino/IdeaProjects/CP274Final/src/CP274Final/TimeDependent.db";
+        //String url = "jdbc:sqlite:/Users/yvonnezino/IdeaProjects/CP274Final/src/CP274Final/OrigTimeDependent.db";
         // create a connection to the database
         conn = DriverManager.getConnection(url);
 
@@ -105,7 +106,7 @@ public class DbTools {
         ArrayList<String> days = new ArrayList<>();
         int month = 1;
         int day = 21;
-        while(month < 5 || day < 6){
+        while(month < 5 || day < 13){
             day++;
             if((day == 32 && month == 1) || (day == 29 && month == 2) || (day == 32 && month == 3)
                     || (day == 31 && month == 4)){
