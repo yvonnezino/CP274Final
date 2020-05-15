@@ -6,8 +6,7 @@ This gives the total number of COVID cases and deaths based on the county of the
 
 How to Use:
 
-A library for javafx and sqlite are needed to run this program, a database is also needed which should be labled TimeDependent.db. This can be created from the TimeDependent.sql file found in the repository. 
-Run this from the main class. Type a state and a county for the data you would like to examine and click the search button. 
+The libraries needed for this program are javafx, sqlite-jdcb, and unirest. The junit-jupiter library is needed to run the unit tests. A database is also needed which should be labled TimeDependent.db. This can be created from the TimeDependent.sql file found in the repository. Run this from the main class. Type a state and a county for the data you would like to examine and click the search button. 
 
 Our original Goals:
 
