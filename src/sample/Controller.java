@@ -1,3 +1,4 @@
+//package CP274Final.src.sample;
 package sample;
 
 import javafx.collections.FXCollections;
@@ -70,8 +71,14 @@ public class Controller implements Initializable {
     }
 
     // Helper method to get the County object thats associated to the county and state text from the UI
-    public County getCounty() throws Exception {
-        return fxToolGetter.getCountyByNameAndState(getName(),getState());
+    public County getCounty()throws Exception{
+        try {
+            return fxToolGetter.getCountyByNameAndState(getName(), getState());
+        }
+        catch (Exception e) {
+            County notARealCounty = new County(0, "County to get exception", null, null);
+            return notARealCounty;
+        }
     }
 
 
@@ -81,18 +88,10 @@ public class Controller implements Initializable {
         // if county name not a real county error message pops up
         if (allCounties.contains(getCounty())){
             area = getCounty();
-            /**int cur=0;
-            //ArrayList<County> county = fxToolGetter.getAllCounties();
-            int index = allCounties.indexOf(area);
-            while (cur != index){
-                cur++;
-            }
-            // Gets the number of deaths and infected cases from the desired county
-            String latestNumDeaths=Integer.toString(area.getAll("deaths").get(area.getAll("deaths").size()-1));
-            String latestNumCases=Integer.toString(area.getAll("confirmed").get(area.getAll("confirmed").size()-1));
-            **/
+
             int latestNumCases=getLiveData.update(area.getName(),getState(),"confirmed");
             int latestNumDeaths=getLiveData.update(area.getName(),getState(),"deaths");
+
             // updates the numbers and county name
             countyLabel.setText(area.name);
             infectedNumber.setText(String.valueOf(latestNumCases));
@@ -118,7 +117,7 @@ public class Controller implements Initializable {
             dialog.initOwner(primaryStage);
             VBox dialogVbox = new VBox(20);
             dialogVbox.getChildren().add(new Text("No Data for Desired Location"));
-            Scene dialogScene = new Scene(dialogVbox, 10, 200);
+            Scene dialogScene = new Scene(dialogVbox, 350, 200);
             dialog.setScene(dialogScene);
             dialog.show();
         }
@@ -127,15 +126,6 @@ public class Controller implements Initializable {
     @Override
     // Method that updates the UI at the start of the program, program starts with info from Los Angeles
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /**String confirmedLa="";
-        String deathsLa="";
-        try {
-            confirmedLa = Integer.toString(allCounties.get(209).getAll("confirmed").get(allCounties.get(209).getAll("confirmed").size() - 1));
-            deathsLa = Integer.toString(allCounties.get(209).getAll("deaths").get(allCounties.get(209).getAll("deaths").size() - 1));
-        }
-        catch (Exception e) {
-                e.printStackTrace();
-        }**/
         int confirmedLa= 0;
         try {
             confirmedLa = getLiveData.update("Los Angeles","California","confirmed");
