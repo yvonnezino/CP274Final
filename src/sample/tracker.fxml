@@ -2,6 +2,7 @@
 
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -35,23 +36,26 @@
                       <NumberAxis fx:id="yAxis" side="LEFT" upperBound="3500000.0" />
                     </yAxis>
                   </LineChart>
-                  <PieChart fx:id="pie" layoutX="104.0" layoutY="116.0" prefHeight="223.0" prefWidth="339.0" title="Population Status" />
-                  <Label fx:id="infectedTitle" layoutX="727.0" layoutY="123.0" text="Number Infected" textFill="WHITE">
+                  <PieChart fx:id="pie" layoutX="104.0" layoutY="116.0" prefHeight="223.0" prefWidth="339.0" title="Population Status">
+                     <effect>
+                        <InnerShadow height="14.93" radius="6.965" width="14.93" />
+                     </effect></PieChart>
+                  <Label fx:id="infectedTitle" layoutX="687.0" layoutY="182.0" text="Number of Confirmed Cases" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="deadTitle" layoutX="737.0" layoutY="572.0" text="Number Dead" textFill="#fcfcfc">
+                  <Label fx:id="deadTitle" layoutX="719.0" layoutY="491.0" text="Number of Deaths" textFill="#fcfcfc">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="infectedNumber" layoutX="749.0" layoutY="221.0" text="Number" textFill="#f5f4f4">
+                  <Label fx:id="infectedNumber" layoutX="745.0" layoutY="257.0" text="Number" textFill="#f5f4f4">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="deadNumber" layoutX="749.0" layoutY="677.0" text="Number" textFill="#f5f4f4">
+                  <Label fx:id="deadNumber" layoutX="750.0" layoutY="566.0" text="Number" textFill="#f5f4f4">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
